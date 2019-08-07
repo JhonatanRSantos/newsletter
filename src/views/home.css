@@ -1,0 +1,42 @@
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(113, 89, 193);
+    color: #fff; 
+    border-color: #000;
+}
+/* label color */
+.input-field label {
+    color: rgb(113, 89, 193);
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+    color: rgb(113, 89, 193);
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid rgb(113, 89, 193);
+    box-shadow: 0 1px 0 0 rgb(113, 89, 193);
+}
+/* valid color */
+.input-field input[type=text].valid {
+    border-bottom: 1px solid rgb(113, 89, 193);
+    box-shadow: 0 1px 0 0 rgb(113, 89, 193);
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid rgb(113, 89, 193);
+    box-shadow: 0 1px 0 0 rgb(113, 89, 193);
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: rgb(113, 89, 193);
+}
+.super-spinner {
+    border-right-color: rgb(113, 89, 193);  
+    border-left-color: rgb(113, 89, 193); 
+    border-top-color: rgb(113, 89, 193);
+    border-bottom-color: rgb(113, 89, 193);
+    color: rgb(113, 89, 193);
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Newsletter</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>    
+    <link rel="stylesheet" href="/pages/home.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper" style="background-color: rgb(113, 89, 193);">
+            <a href="#" class="brand-logo center">Newsletter</a>            
+        </div>
+    </nav>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col s1 m3 l4"></div>
+        <form class="col s10 m6 l4">
+            <div id="name_div" class="input-field">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="name" type="text" class="validate">
+                <label for="name">Name</label>
+            </div>
+            <div id="email_div" class="input-field">
+                <i class="material-icons prefix">email</i>
+                <input id="email" type="email" class="validate">
+                <label for="email">Email</label>
+                <span class="helper-text" data-error="Enter with a valid email" data-success=""></span>                
+            </div>
+            <div class="right">
+                <a id="link" href="#" style="margin-right: 10px;" onclick="subscribeAndUnsubscribeLink(event)">Click here to unsubscribe</a>
+                <a id="btn_submit" class="waves-effect waves-light btn-small" onclick="subscribeAndUnsubscribeBtn(event)" style="background-color: rgb(113, 89, 193);">
+                    Subscribe
+                </a>
+            </div>
+            <br>
+            <br>            
+            <div id="loader" class="center" style="visibility: hidden;">
+                <p>Wait a moment...</p>
+                <div class="row">
+                    <div class="preloader-wrapper small active">                
+                        <div class="spinner-layer super-spinner">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">                        
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>         
+        </form>
+        <div class="col s1 m3 l4"></div>
+    </div>
+    <div id="footer" class="center-align">
+        <h6>By: Jhonatan R. Santos</h6>
+        <h6>2019</h6>
+    </div>
+    <script>
+        const form = document.querySelector("form");
+        const name_div = document.getElementById("name_div");
+        const btn_submit = document.getElementById("btn_submit");
+        const link = document.getElementById("link");
+        let unsub = true;
+        function subscribeAndUnsubscribeBtn (event) {
+            event.preventDefault();
+            let user_name = document.getElementById("name");
+            let user_mail = document.getElementById("email");
+            let loader = document.getElementById("loader");
+            loader.style.visibility = "visible";
+            if(unsub) {
+                axios.post("/create", {
+                    name: user_name.value,
+                    email: user_mail.value
+                })
+                .then(function (response) {
+                    loader.style.visibility = "hidden";
+                    alert("Success")
+                })
+                .catch(function (error) {
+                    loader.style.visibility = "hidden";
+                    alert("Error");
+                });
+            } else {
+                axios.delete("/delete", { email : user_mail.value })
+                .then(function (response) {
+                    loader.style.visibility = "hidden";
+                    alert("Success")
+                })
+                .catch(function (error) {
+                    loader.style.visibility = "hidden";
+                    alert("Error");
+                });                
+            }
+        }
+        function subscribeAndUnsubscribeLink (event) {
+            event.preventDefault();
+            if(unsub) {
+                unsub = false;
+                link.innerHTML = "Click here to subscribe";
+                btn_submit.innerHTML = "unsubscribe";
+                name_div.remove();
+            } else {
+                unsub = true;
+                link.innerHTML = "Click here to unsubscribe";
+                btn_submit.innerHTML = "subscribe";
+                form.insertBefore(name_div, form.childNodes[0]);
+            }
+        }
+    </script>
+</body>
+</html>
